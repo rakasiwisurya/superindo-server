@@ -9,11 +9,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Transaction.belongsTo(models.User, {
-        foreignKey: "created_user",
+        as: "created_user",
+        foreignKey: "created_user_id",
       });
 
       Transaction.belongsTo(models.User, {
-        foreignKey: "updated_user",
+        as: "updated_user",
+        foreignKey: "updated_user_id",
       });
 
       Transaction.belongsToMany(models.ProductVariant, {
@@ -29,8 +31,8 @@ module.exports = (sequelize, DataTypes) => {
       active: DataTypes.BOOLEAN,
       transaction_no: DataTypes.STRING,
       total_amount: DataTypes.INTEGER,
-      created_user: DataTypes.INTEGER,
-      updated_user: DataTypes.INTEGER,
+      created_user_id: DataTypes.INTEGER,
+      updated_user_id: DataTypes.INTEGER,
     },
     {
       sequelize,
@@ -39,14 +41,6 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
       createdAt: "created_date",
       updatedAt: "updated_date",
-      hooks: {
-        beforeValidate: (product, options) => {
-          if (!product.transaction_no) {
-            product.transaction_no =
-              "TRNS" + (options.sequelizeInstance.lastID + 1).toString().padStart(6, "0");
-          }
-        },
-      },
     }
   );
   return Transaction;

@@ -13,7 +13,12 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(30),
       },
-      created_user: {
+      active: {
+        allowNull: false,
+        defaultValue: true,
+        type: Sequelize.BOOLEAN,
+      },
+      created_user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -23,7 +28,7 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      updated_user: {
+      updated_user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {

@@ -14,11 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       ProductVariant.belongsTo(models.User, {
-        foreignKey: "created_user",
+        as: "created_user",
+        foreignKey: "created_user_id",
       });
 
       ProductVariant.belongsTo(models.User, {
-        foreignKey: "updated_user",
+        as: "updated_user",
+        foreignKey: "updated_user_id",
       });
 
       ProductVariant.belongsToMany(models.Transaction, {
@@ -38,8 +40,8 @@ module.exports = (sequelize, DataTypes) => {
       qty: DataTypes.INTEGER,
       image_location: DataTypes.STRING,
       product_id: DataTypes.INTEGER,
-      created_user: DataTypes.INTEGER,
-      updated_user: DataTypes.INTEGER,
+      created_user_id: DataTypes.INTEGER,
+      updated_user_id: DataTypes.INTEGER,
     },
     {
       sequelize,
@@ -48,14 +50,6 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
       createdAt: "created_date",
       updatedAt: "updated_date",
-      hooks: {
-        beforeValidate: (product, options) => {
-          if (!product.plu) {
-            product.plu =
-              "VRNT" + (options.sequelizeInstance.lastID + 1).toString().padStart(6, "0");
-          }
-        },
-      },
     }
   );
   return ProductVariant;

@@ -9,19 +9,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       ProductCategory.belongsTo(models.User, {
-        foreignKey: "created_user",
+        as: "created_user",
+        foreignKey: "created_user_id",
       });
 
       ProductCategory.belongsTo(models.User, {
-        foreignKey: "updated_user",
+        as: "updated_user",
+        foreignKey: "updated_user_id",
       });
     }
   }
   ProductCategory.init(
     {
       name: DataTypes.STRING,
-      created_user: DataTypes.INTEGER,
-      updated_user: DataTypes.INTEGER,
+      active: DataTypes.BOOLEAN,
+      created_user_id: DataTypes.INTEGER,
+      updated_user_id: DataTypes.INTEGER,
     },
     {
       sequelize,

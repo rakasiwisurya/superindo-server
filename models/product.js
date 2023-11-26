@@ -14,11 +14,13 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       Product.belongsTo(models.User, {
-        foreignKey: "created_date",
+        as: "created_user",
+        foreignKey: "created_user_id",
       });
 
       Product.belongsTo(models.User, {
-        foreignKey: "updated_user",
+        as: "updated_user",
+        foreignKey: "updated_user_id",
       });
     }
   }
@@ -28,8 +30,8 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
       product_category_id: DataTypes.INTEGER,
-      created_user: DataTypes.INTEGER,
-      updated_user: DataTypes.INTEGER,
+      created_user_id: DataTypes.INTEGER,
+      updated_user_id: DataTypes.INTEGER,
     },
     {
       sequelize,
@@ -38,14 +40,6 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
       createdAt: "created_date",
       updatedAt: "updated_date",
-      hooks: {
-        beforeValidate: (product, options) => {
-          if (!product.plu) {
-            product.plu =
-              "PDCT" + (options.sequelizeInstance.lastID + 1).toString().padStart(6, "0");
-          }
-        },
-      },
     }
   );
   return Product;

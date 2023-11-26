@@ -46,7 +46,7 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      created_user: {
+      created_user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -56,7 +56,7 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      updated_user: {
+      updated_user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -66,11 +66,11 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      createdAt: {
+      created_date: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_date: {
         allowNull: false,
         type: Sequelize.DATE,
       },

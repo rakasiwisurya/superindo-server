@@ -19,11 +19,13 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       TransactionDetail.belongsTo(models.User, {
-        foreignKey: "created_user",
+        as: "created_user",
+        foreignKey: "created_user_id",
       });
 
       TransactionDetail.belongsTo(models.User, {
-        foreignKey: "updated_user",
+        as: "updated_user",
+        foreignKey: "updated_user_id",
       });
     }
   }
@@ -35,8 +37,8 @@ module.exports = (sequelize, DataTypes) => {
       active: DataTypes.BOOLEAN,
       product_variant_id: DataTypes.INTEGER,
       transaction_id: DataTypes.INTEGER,
-      created_user: DataTypes.INTEGER,
-      updated_user: DataTypes.INTEGER,
+      created_user_id: DataTypes.INTEGER,
+      updated_user_id: DataTypes.INTEGER,
     },
     {
       sequelize,
