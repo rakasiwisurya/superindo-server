@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert("product-variants", [
+    await queryInterface.bulkInsert("product_variants", [
       {
         name: "Apple Premium",
         code: "VRNT000001",
@@ -28,6 +28,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("product-variants", null);
+    await queryInterface.bulkDelete("product_variants", null);
   },
 };

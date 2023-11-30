@@ -40,10 +40,12 @@ module.exports = {
       },
       created_date: {
         allowNull: false,
+        defaultValue: Sequelize.literal("now()"),
         type: Sequelize.DATE,
       },
       updated_date: {
         allowNull: false,
+        defaultValue: Sequelize.literal("now()"),
         type: Sequelize.DATE,
       },
     });
