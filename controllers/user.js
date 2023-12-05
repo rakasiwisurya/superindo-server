@@ -175,3 +175,70 @@ exports.login = async (req, res) => {
     });
   }
 };
+
+exports.loginAdmin = async (req, res) => {
+  const { username, password } = req.body;
+
+  const schema = Joi.object({
+    username: Joi.string().required(),
+    password: Joi.string().required(),
+  });
+
+  const { error } = schema.validate(req.body);
+
+  if (error) {
+    return res.status(400).send({
+      status: "Failed",
+      message: error.details[0].message,
+    });
+  }
+
+  try {
+    let user = await User.findOne({
+      where: { username },
+      attributes: {
+        exclude: ["created_date", "updated_date"],
+      },
+    });
+
+    if (!user) {
+      return res.status(400).send({
+        status: "Failed",
+        message: "Username or password is incorrect",
+      });
+    }
+
+    if (user?.role !== "ADMINISTRATOR") {
+      return res.status(400).send({
+        status: "Failed",
+        message: "You are not administrator",
+      });
+    }
+
+    const isValid = await bcrypt.compare(password, user.password);
+
+    if (!isValid) {
+      return res.status(400).send({
+        status: "Failed",
+        message: "Username or password is incorrect",
+      });
+    }
+
+    user = JSON.parse(JSON.stringify(user));
+    delete user.password;
+
+    const token = jwt.sign(user, process.env.TOKEN_KEY);
+
+    res.send({
+      status: "Success",
+      message: "Login succesful",
+      data: { ...user, token },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      status: "Failed",
+      message: "Internal server error",
+    });
+  }
+};

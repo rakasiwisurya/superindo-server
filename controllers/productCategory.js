@@ -54,6 +54,7 @@ exports.getProductCategories = async (req, res) => {
   try {
     let productCategories = await ProductCategory.findAll({
       where: { active: true },
+      order: [["created_date", "DESC"]],
       include: [
         {
           model: User,

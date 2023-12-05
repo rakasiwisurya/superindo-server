@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { auth, adminOnly } = require("../middlewares/auth");
 const { upload } = require("../middlewares/file");
-const { register, registerAdmin, login } = require("../controllers/user");
+const { register, registerAdmin, login, loginAdmin } = require("../controllers/user");
 const {
   addProductCategory,
   getProductCategories,
@@ -25,10 +25,12 @@ const {
   nonactiveProductVariant,
 } = require("../controllers/productVariant");
 const { addTransaction, getTransactions } = require("../controllers/transaction");
+const { getDashboard } = require("../controllers/dashboard");
 
 router.post("/register", register);
 router.post("/register-admin", registerAdmin);
 router.post("/login", login);
+router.post("/login-admin", loginAdmin);
 
 router.post("/product-categories", auth, adminOnly, addProductCategory);
 router.get("/product-categories", auth, adminOnly, getProductCategories);
@@ -62,5 +64,7 @@ router.delete("/product-variants/:id", auth, adminOnly, nonactiveProductVariant)
 
 router.post("/transactions", auth, addTransaction);
 router.get("/transactions", auth, adminOnly, getTransactions);
+
+router.get("/dashboard", auth, adminOnly, getDashboard);
 
 module.exports = router;

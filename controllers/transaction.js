@@ -110,6 +110,7 @@ exports.getTransactions = async (req, res) => {
   try {
     let data = await TransactionDetail.findAll({
       where: { active: true },
+      order: [["created_date", "DESC"]],
       include: [
         {
           model: ProductVariant,

@@ -69,6 +69,7 @@ exports.getProductVariants = async (req, res) => {
   try {
     let productVariants = await ProductVariant.findAll({
       where: { active: true },
+      order: [["created_date", "DESC"]],
       include: [
         {
           model: Product,
