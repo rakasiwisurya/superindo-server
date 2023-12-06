@@ -173,6 +173,7 @@ exports.getProductVariant = async (req, res) => {
 exports.updateProductVariant = async (req, res) => {
   const { id } = req.params;
   const { id: userId } = req.user;
+  const { code, name } = req.body;
 
   const payload = {
     ...req.body,
@@ -182,6 +183,20 @@ exports.updateProductVariant = async (req, res) => {
   if (req.file) payload.image_location = req.file.filename;
 
   try {
+    const isProductVariantExist = await ProductVariant.findOne({
+      where: {
+        [Op.or]: { code, name },
+      },
+      attributes: ["code", "name"],
+    });
+
+    if (isProductVariantExist) {
+      return res.status(400).send({
+        status: "Failed",
+        message: "Product variant already exist",
+      });
+    }
+
     await ProductVariant.update(payload, {
       where: { id },
     });

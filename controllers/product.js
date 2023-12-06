@@ -157,6 +157,7 @@ exports.getProduct = async (req, res) => {
 exports.updateProduct = async (req, res) => {
   const { id } = req.params;
   const { id: userId } = req.user;
+  const { plu, name } = req.body;
 
   const payload = {
     ...req.body,
@@ -164,6 +165,20 @@ exports.updateProduct = async (req, res) => {
   };
 
   try {
+    const isProductExist = await Product.findOne({
+      where: {
+        [Op.or]: { plu, name },
+      },
+      attributes: ["name", "plu"],
+    });
+
+    if (isProductExist) {
+      return res.status(400).send({
+        status: "Failed",
+        message: "Product already exist",
+      });
+    }
+
     await Product.update(payload, {
       where: { id },
     });

@@ -135,6 +135,7 @@ exports.getProductCategory = async (req, res) => {
 exports.updateProductCategory = async (req, res) => {
   const { id } = req.params;
   const { id: userId } = req.user;
+  const { name } = req.body;
 
   const payload = {
     ...req.body,
@@ -142,6 +143,18 @@ exports.updateProductCategory = async (req, res) => {
   };
 
   try {
+    const isProductCategoryExist = await ProductCategory.findOne({
+      where: { name },
+      attributes: ["name"],
+    });
+
+    if (isProductCategoryExist) {
+      return res.status(400).send({
+        status: "Failed",
+        message: "Product category already exist",
+      });
+    }
+
     await ProductCategory.update(payload, {
       where: { id },
     });
