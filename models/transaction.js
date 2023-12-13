@@ -19,10 +19,14 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       Transaction.belongsToMany(models.ProductVariant, {
-        as: "transaction",
+        as: "product_variant_id",
         through: {
           model: models.TransactionDetail,
         },
+      });
+
+      Transaction.hasMany(models.TransactionDetail, {
+        as: "transaction_detail",
       });
     }
   }

@@ -91,7 +91,7 @@ exports.getProductVariants = async (req, res) => {
 
     productVariants = JSON.parse(JSON.stringify(productVariants));
 
-    const data = productVariants.map((productVariant) => {
+    const data = productVariants?.map((productVariant) => {
       const newData = {
         ...productVariant,
         image_location: `${req.protocol}://${req.headers.host}/${process.env.UPLOAD_PATH}/${

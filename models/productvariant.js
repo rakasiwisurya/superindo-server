@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
           model: models.TransactionDetail,
         },
       });
+
+      ProductVariant.hasMany(models.TransactionDetail, {
+        as: "transaction_detail",
+      });
     }
   }
   ProductVariant.init(

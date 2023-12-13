@@ -81,7 +81,7 @@ exports.getProducts = async (req, res) => {
 
     products = JSON.parse(JSON.stringify(products));
 
-    const data = products.map((product) => {
+    const data = products?.map((product) => {
       const newData = {
         ...product,
         product_category_name: product.product_category.name,

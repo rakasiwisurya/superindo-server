@@ -2,7 +2,14 @@ const express = require("express");
 const router = express.Router();
 const { auth, adminOnly } = require("../middlewares/auth");
 const { upload } = require("../middlewares/file");
-const { register, registerAdmin, login, loginAdmin } = require("../controllers/user");
+const {
+  register,
+  registerAdmin,
+  login,
+  loginAdmin,
+  getUserTransaction,
+  getUserTransactions,
+} = require("../controllers/user");
 const {
   addProductCategory,
   getProductCategories,
@@ -24,7 +31,11 @@ const {
   updateProductVariant,
   nonactiveProductVariant,
 } = require("../controllers/productVariant");
-const { addTransaction, getTransactions } = require("../controllers/transaction");
+const {
+  addTransaction,
+  getTransactions,
+  getTransactionDetails,
+} = require("../controllers/transaction");
 const { getDashboard } = require("../controllers/dashboard");
 
 router.post("/register", register);
@@ -64,6 +75,10 @@ router.delete("/product-variants/:id", auth, adminOnly, nonactiveProductVariant)
 
 router.post("/transactions", auth, addTransaction);
 router.get("/transactions", auth, adminOnly, getTransactions);
+router.get("/transaction-details", auth, adminOnly, getTransactionDetails);
+
+router.get("/users/transactions", auth, getUserTransactions);
+router.get("/users/transactions/:id", auth, getUserTransaction);
 
 router.get("/dashboard", auth, adminOnly, getDashboard);
 

@@ -1,7 +1,14 @@
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
-const { User } = require("../models");
+const {
+  Product,
+  ProductCategory,
+  ProductVariant,
+  Transaction,
+  TransactionDetail,
+  User,
+} = require("../models");
 
 exports.register = async (req, res) => {
   const { username, password } = req.body;
@@ -233,6 +240,112 @@ exports.loginAdmin = async (req, res) => {
       status: "Success",
       message: "Login succesful",
       data: { ...user, token },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      status: "Failed",
+      message: "Internal server error",
+    });
+  }
+};
+
+exports.getUserTransactions = async (req, res) => {
+  const { offset, limit } = req.query;
+  const { id } = req.user;
+  try {
+    let data = await User.findOne({
+      where: { id, active: true },
+      offset,
+      limit,
+      exclude: ["created_date", "updated_date"],
+      include: [
+        {
+          model: Transaction,
+          as: "created_user_transaction",
+          include: {
+            model: TransactionDetail,
+            as: "transaction_detail",
+            include: [
+              {
+                model: ProductVariant,
+                as: "product_variant",
+                include: [
+                  {
+                    model: Product,
+                    as: "product",
+                    include: {
+                      model: ProductCategory,
+                      as: "product_category",
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
+    });
+
+    res.send({
+      status: "Success",
+      message: "Success get all user transaction",
+      data,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      status: "Failed",
+      message: "Internal server error",
+    });
+  }
+};
+
+exports.getUserTransaction = async (req, res) => {
+  const { id } = req.params;
+  const { id: userId } = req.user;
+
+  try {
+    let data = await Transaction.findOne({
+      where: { id, created_user_id: userId, active: true },
+      include: [
+        {
+          model: TransactionDetail,
+          as: "transaction_detail",
+          include: [
+            {
+              model: ProductVariant,
+              as: "product_variant",
+              include: [
+                {
+                  model: Product,
+                  as: "product",
+                  include: {
+                    model: ProductCategory,
+                    as: "product_category",
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: User,
+          as: "created_user",
+          attributes: ["username"],
+        },
+        {
+          model: User,
+          as: "updated_user",
+          attributes: ["username"],
+        },
+      ],
+    });
+
+    res.send({
+      status: "Success",
+      message: "Success get all transaction",
+      data,
     });
   } catch (error) {
     console.error(error);

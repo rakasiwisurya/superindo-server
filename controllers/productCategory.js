@@ -71,7 +71,7 @@ exports.getProductCategories = async (req, res) => {
 
     productCategories = JSON.parse(JSON.stringify(productCategories));
 
-    const data = productCategories.map((productCategory) => ({
+    const data = productCategories?.map((productCategory) => ({
       ...productCategory,
       created_user: productCategory.created_user.username,
       updated_user: productCategory.updated_user.username,
