@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "NODE_ENV=production node index.js",
     "client": "npm start --prefix ../client",
-    "server": "nodemon index.js",
+    "server": "NODE_ENV=development nodemon index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],

@@ -61,7 +61,7 @@ exports.register = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -118,7 +118,7 @@ exports.registerAdmin = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -178,7 +178,7 @@ exports.login = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -245,46 +245,54 @@ exports.loginAdmin = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
 
 exports.getUserTransactions = async (req, res) => {
-  const { offset, limit } = req.query;
+  // const { offset, limit = 10 } = req.query;
   const { id } = req.user;
+
   try {
-    let data = await User.findOne({
-      where: { id, active: true },
-      offset,
-      limit,
-      exclude: ["created_date", "updated_date"],
+    let userTransactions = await Transaction.findAll({
+      where: { created_user_id: id },
+      // offset,
+      // limit,
+      order: [["created_date", "DESC"]],
       include: [
         {
-          model: Transaction,
-          as: "created_user_transaction",
-          include: {
-            model: TransactionDetail,
-            as: "transaction_detail",
-            include: [
-              {
-                model: ProductVariant,
-                as: "product_variant",
-                include: [
-                  {
-                    model: Product,
-                    as: "product",
-                    include: {
-                      model: ProductCategory,
-                      as: "product_category",
-                    },
-                  },
-                ],
-              },
-            ],
-          },
+          model: User,
+          as: "created_user",
+          attributes: ["username"],
+        },
+        {
+          model: User,
+          as: "updated_user",
+          attributes: ["username"],
         },
       ],
+    });
+
+    userTransactions = JSON.parse(JSON.stringify(userTransactions));
+
+    const data = userTransactions?.map((userTransaction) => {
+      const newData = {
+        id: userTransaction.id,
+        active: userTransaction.active,
+        transaction_no: userTransaction.transaction_no,
+        total_amount: userTransaction.total_amount,
+        created_user_id: userTransaction.created_user_id,
+        updated_user_id: userTransaction.updated_user_id,
+        created_date: userTransaction.created_date,
+        updated_date: userTransaction.updated_date,
+        created_user: userTransaction.created_user.username,
+        updated_user: userTransaction.updated_user.username,
+      };
+
+      delete userTransaction.transaction_detail;
+
+      return newData;
     });
 
     res.send({
@@ -296,7 +304,7 @@ exports.getUserTransactions = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -306,12 +314,25 @@ exports.getUserTransaction = async (req, res) => {
   const { id: userId } = req.user;
 
   try {
-    let data = await Transaction.findOne({
+    let transaction = await Transaction.findOne({
       where: { id, created_user_id: userId, active: true },
       include: [
         {
           model: TransactionDetail,
           as: "transaction_detail",
+          attributes: [
+            "id",
+            "price",
+            "qty",
+            "subtotal",
+            "active",
+            "product_variant_id",
+            "transaction_id",
+            "created_user_id",
+            "updated_user_id",
+            "created_date",
+            "updated_date",
+          ],
           include: [
             {
               model: ProductVariant,
@@ -342,16 +363,46 @@ exports.getUserTransaction = async (req, res) => {
       ],
     });
 
+    transaction = JSON.parse(JSON.stringify(transaction));
+
+    const data = {
+      id: transaction.id,
+      transaction_no: transaction.transaction_no,
+      total_amount: transaction.total_amount,
+      created_user: transaction.created_user.username,
+      updated_user: transaction.updated_user.username,
+      created_user_id: transaction.created_user_id,
+      updated_user_id: transaction.updated_user_id,
+      created_date: transaction.created_date,
+      updated_date: transaction.updated_date,
+      transaction_details: transaction.transaction_detail?.map((transactionDetail) => ({
+        id: transactionDetail.id,
+        price: transactionDetail.price,
+        qty: transactionDetail.qty,
+        subtotal: transactionDetail.subtotal,
+        product_variant_id: transactionDetail.product_variant.id,
+        product_variant_name: transactionDetail.product_variant.name,
+        product_variant_code: transactionDetail.product_variant.code,
+        product_variant_price: transactionDetail.product_variant.price,
+        product_variant_image_location: transactionDetail.product_variant.image_location,
+        product_id: transactionDetail.product_variant.product.id,
+        product_plu: transactionDetail.product_variant.product.plu,
+        product_name: transactionDetail.product_variant.product.name,
+        product_category_id: transactionDetail.product_variant.product.product_category.id,
+        product_category_name: transactionDetail.product_variant.product.product_category.nam,
+      })),
+    };
+
     res.send({
       status: "Success",
-      message: "Success get all transaction",
+      message: "Success get detail user transaction",
       data,
     });
   } catch (error) {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };

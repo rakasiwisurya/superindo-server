@@ -101,7 +101,7 @@ exports.getProducts = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -149,7 +149,7 @@ exports.getProduct = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -191,7 +191,7 @@ exports.updateProduct = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -218,7 +218,7 @@ exports.nonactiveProduct = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };

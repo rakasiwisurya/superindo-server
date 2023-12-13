@@ -60,7 +60,7 @@ exports.addProductVariant = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -114,7 +114,7 @@ exports.getProductVariants = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -165,7 +165,7 @@ exports.getProductVariant = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -209,7 +209,7 @@ exports.updateProductVariant = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -236,7 +236,7 @@ exports.nonactiveProductVariant = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };

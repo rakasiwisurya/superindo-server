@@ -45,7 +45,7 @@ exports.addProductCategory = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -86,7 +86,7 @@ exports.getProductCategories = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -127,7 +127,7 @@ exports.getProductCategory = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -167,7 +167,7 @@ exports.updateProductCategory = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -194,7 +194,7 @@ exports.nonactiveProductCategory = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };

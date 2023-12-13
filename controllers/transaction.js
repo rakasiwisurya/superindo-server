@@ -145,7 +145,7 @@ exports.getTransactions = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
@@ -235,7 +235,7 @@ exports.getTransactionDetails = async (req, res) => {
     console.error(error);
     res.status(500).send({
       status: "Failed",
-      message: "Internal server error",
+      message: error.message,
     });
   }
 };
