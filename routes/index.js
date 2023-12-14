@@ -30,6 +30,7 @@ const {
   getProductVariant,
   updateProductVariant,
   nonactiveProductVariant,
+  deleteProductVariant,
 } = require("../controllers/productVariant");
 const {
   addTransaction,
@@ -72,6 +73,7 @@ router.put(
   updateProductVariant
 );
 router.delete("/product-variants/:id", auth, adminOnly, nonactiveProductVariant);
+router.delete("/product-variants/delete/:id", auth, adminOnly, deleteProductVariant);
 
 router.post("/transactions", auth, addTransaction);
 router.get("/transactions", auth, adminOnly, getTransactions);
