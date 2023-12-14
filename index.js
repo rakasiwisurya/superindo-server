@@ -11,6 +11,10 @@ app.use("/uploads", express.static("uploads"));
 
 app.use("/api/v1/", router);
 
+app.get("/", (req, res) => {
+  res.send("Welcome to Superindo API");
+});
+
 app.listen(process.env.PORT, () =>
   console.log(`Listening on http://localhost:${process.env.PORT}!`)
 );
