@@ -2,22 +2,22 @@
   "development": {
     "username": "postgres",
     "password": "root",
-    "database": "db_superindo_test",
+    "database": "db_superindo",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
     "password": "root",
-    "database": "db_superindo_test",
+    "database": "db_superindo",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
-    "password": "root",
-    "database": "db_superindo_test",
-    "host": "127.0.0.1",
+    "password": "x87G&tK%4*Yjg2b",
+    "database": "postgres",
+    "host": "db.vkocuqxunkkencwdktke.supabase.co",
     "dialect": "postgres"
   }
 }
