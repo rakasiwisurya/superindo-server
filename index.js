@@ -8,7 +8,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use("/uploads", express.static("uploads"));
+app.use(`/${process.env.UPLOAD_PATH}`, express.static(process.env.UPLOAD_PATH));
 
 app.use("/api/v1/", router);
 
