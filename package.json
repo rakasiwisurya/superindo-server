@@ -12,9 +12,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "engines": {
-    "node": "18.x"
-  },
   "dependencies": {
     "@vercel/node": "^3.0.12",
     "bcrypt": "^5.1.1",
