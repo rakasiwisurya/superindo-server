@@ -13,7 +13,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@vercel/node": "^3.0.12",
     "bcrypt": "^5.1.1",
     "cloudinary": "^1.41.0",
     "concurrently": "^8.2.2",
