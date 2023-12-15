@@ -110,9 +110,9 @@ exports.getProductVariants = async (req, res) => {
         image_location:
           process.env.NODE_ENV === "production" && productVariant.image_location
             ? cloudinary.url(productVariant.image_location)
-            : `${req.protocol}://${req.headers.host}/${process.env.UPLOAD_PATH}/${
-                productVariant.image_location ?? "no-image.png"
-              }`,
+            : `${req.get("X-Forwarded-Proto") ?? req.protocol}://${req.headers.host}/${
+                process.env.UPLOAD_PATH
+              }/${productVariant.image_location ?? "no-image.png"}`,
         product_name: productVariant.product.name,
         created_user: productVariant.created_user.username,
         updated_user: productVariant.updated_user.username,
@@ -166,9 +166,9 @@ exports.getProductVariant = async (req, res) => {
       data.image_location =
         process.env.NODE_ENV === "production" && data.image_location
           ? cloudinary.url(data.image_location)
-          : `${req.protocol}://${req.headers.host}/${process.env.UPLOAD_PATH}/${
-              data.image_location ?? "no-image.png"
-            }`;
+          : `${req.get("X-Forwarded-Proto") ?? req.protocol}://${req.headers.host}/${
+              process.env.UPLOAD_PATH
+            }/${data.image_location ?? "no-image.png"}`;
       data.product_name = data.product.name;
       data.created_user = data.created_user.username;
       data.updated_user = data.updated_user.username;
