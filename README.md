@@ -30,6 +30,8 @@ Run every seeder.
 
 Deletes data from the database.
 
+---
+
 # Getting Started with Express Node JS
 
 This project was installed with [Express JS Framework](https://expressjs.com/en/starter/installing.html).
