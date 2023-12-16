@@ -18,6 +18,7 @@
     "password": "x87G&tK%4*Yjg2b",
     "database": "postgres",
     "host": "db.vkocuqxunkkencwdktke.supabase.co",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "logging": false
   }
 }
