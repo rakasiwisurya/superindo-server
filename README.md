@@ -1,3 +1,35 @@
+# Getting Started with Sequelize CLI
+
+This project was installed with [Sequelize CLI (ORM)](https://sequelize.org/docs/v6/getting-started).
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `yarn sequelize db:create`
+
+Create database specified by configuration.\
+
+### `yarn sequelize db:drop`
+
+Drop database specified by configuration.\
+
+### `yarn sequelize db:migrate`
+
+Run pending migrations.\
+
+### `yarn sequelize db:migrate:undo:all`
+
+Revert all migrations ran.\
+
+### `yarn sequelize db:seed:all`
+
+Run every seeder.\
+
+### `yarn sequelize db:seed:undo:all`
+
+Deletes data from the database.\
+
 # Getting Started with Express Node JS
 
 This project was installed with [Express JS Framework](https://expressjs.com/en/starter/installing.html).
