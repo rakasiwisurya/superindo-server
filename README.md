@@ -8,27 +8,27 @@ In the project directory, you can run:
 
 ### `yarn sequelize db:create`
 
-Create database specified by configuration.\
+Create database specified by configuration.
 
 ### `yarn sequelize db:drop`
 
-Drop database specified by configuration.\
+Drop database specified by configuration.
 
 ### `yarn sequelize db:migrate`
 
-Run pending migrations.\
+Run pending migrations.
 
 ### `yarn sequelize db:migrate:undo:all`
 
-Revert all migrations ran.\
+Revert all migrations ran.
 
 ### `yarn sequelize db:seed:all`
 
-Run every seeder.\
+Run every seeder.
 
 ### `yarn sequelize db:seed:undo:all`
 
-Deletes data from the database.\
+Deletes data from the database.
 
 # Getting Started with Express Node JS
 
@@ -41,19 +41,19 @@ In the project directory, you can run:
 ### `yarn dev`
 
 Launches the client and server app in one terminal.\
-But make sure that you are set the client app is in /client directory.\
+But make sure that you are set the client app is in /client directory.
 
 ### `yarn server`
 
 Runs the app in the development mode.\
 Open [http://localhost:4000](http://localhost:4000) to view it in the browser.
 
-The server will reload if you make edits.\
+The server will reload if you make edits.
 
 ### `yarn start`
 
 Run the app for production with production env.\
-It correctly run the app production mode and optimizes the app for the best performance.\
+It correctly run the app production mode and optimizes the app for the best performance.
 
 Your app is ready to be deployed!
 
